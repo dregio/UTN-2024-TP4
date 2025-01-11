@@ -1,0 +1,11 @@
+{
+  "name": "utn-2024-tp4",
+  "version": "1.0.0",
+  "description": "TP del curso de UTN: API de CRUD con MongoDB - D.R.P. 2024",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "D.R.P.",
+  "license": "ISC"
+}
