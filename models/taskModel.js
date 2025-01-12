@@ -23,7 +23,7 @@ const taskSchema = mongoose.Schema({
         type: Date,
     },
     finished_at: {
-        type: Date,
+    type: Date,
     },
     status: {
         type: String,
@@ -49,6 +49,14 @@ const taskSchema = mongoose.Schema({
         ref: "User",
         required: true,
     },
-
-    
+    modified_at: {
+        type: Date,
+        default: Date.now
+    },
+    picture: {
+        type: String,
+        default: "https://picsum.photos/200"    // TODO2: pasar a Project.
+    }
 })
+
+export default mongoose.model("Task", taskSchema);
