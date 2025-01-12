@@ -1,3 +1,3 @@
-const API_V1 = "API/v1/";
+const API_V1_ = "/api/v1/";
 
-export default { API_V1 };
+export default { API_V1_ };
