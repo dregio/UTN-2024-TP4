@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "TP del curso de UTN: API de CRUD con MongoDB - D.R.P. 2024",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "r": "nodemon index.js"
   },
   "author": "D.R.P.",
   "license": "ISC",
