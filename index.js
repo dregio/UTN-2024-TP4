@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import consts from "./utils/consts.js";
 import taskRoute from "./routes/taskRoute.js";
 
+// TODO1: Ver video 1:21:14
 const API_TASK = consts.API_V1 + "task";
 
 const app = express();
