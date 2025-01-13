@@ -1,5 +1,18 @@
 import mongoose from "mongoose";
 
+const TaskStatus = Object.freeze({
+    NOT_STARTED: "Not started",
+    STARTED: "Started",
+    FINISHED: "Finished"
+});
+
+const TaskPrio = Object.freeze({
+    0: "N/A",
+    1: "1",
+    2: "2",
+    3: "3"
+});
+
 const taskSchema = mongoose.Schema({
     // campo _id: es generado por mongoDB
     number: { 
@@ -23,20 +36,34 @@ const taskSchema = mongoose.Schema({
         type: Date,
     },
     finished_at: {
-    type: Date,
+        type: Date,
     },
     status: {
         type: String,
         required: true,
-        default: "not started"
+        default: "NOT STARTED",
+        enum: Object.keys(TaskStatus),
+        validate: {
+            validator: function (v) {
+                return Object.keys(TaskStatus).includes(v);
+            },
+            message: props => `${props.value} is not a valid task status`
+        }
     },
     priority: {
         type: Number,
         required: true,
-        default: 3
+        default: 0,
+        enum: Object.keys(TaskPrio),
+        validate: {
+            validator: function (v) {
+                return Object.keys(TaskPrio).includes(v);
+            },
+            message: props => `${props.value} is not a valid task priority`
+        }
     },
     project_id: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Project",
         required: true,
     },
@@ -45,7 +72,7 @@ const taskSchema = mongoose.Schema({
         default: Date.now
     },
     user_id: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
     },

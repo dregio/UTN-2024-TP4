@@ -37,7 +37,7 @@ const userSchema = mongoose.Schema({
     role: {
         type: String,
         required: true,
-        default: "user",
+        default: "USER",
         enum: Object.keys(Roles),
         validate: {
             validator: function (v) {
