@@ -7,11 +7,10 @@ taskRoute.get("/get", tc.getTasks);
 
 //endpoint exclusivo para obtener los status disponibles
 taskRoute.get("/status", tc.getTaskStatusList); // TODO2: Agregar verifyTokenMiddleware
-taskRoute.get("/prio", getTaskPriorityList); // ACÁ también.
-taskRoute.post("/create", createTask);
-taskRoute.get("/get-by-id/:id", findTaskById); // ACÁ también.
-taskRoute.post("/get-by-name",  findTaskByName); // ACÁ también.
-taskRoute.put("/update/:id", updateTask)
-taskRoute.delete("/delete/:id", deleteTask)
+taskRoute.get("/prio", tc.getTaskPriorityList); // ACÁ también.
+taskRoute.post("/create", tc.createTask);
+taskRoute.get("/get-by-id/:id", tc.getTask); // ACÁ también.
+taskRoute.put("/update/:id", tc.updateTask)
+taskRoute.delete("/delete/:id", tc.deleteTask)
 
 export default taskRoute;
