@@ -1,12 +1,11 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import taskRoute from "./routes/taskRoute.js";
+import taskRoute from "./src/routes/taskRoute.js";
 import { connectDB } from "./db.js";
-import userRoute from "./routes/userRoute.js";
+import userRoute from "./src/routes/userRoute.js";
 import { API_V1_, PORT } from "./config.js";
    
-// TODO1: Ver video 2:05
 
 const app = express();
 
@@ -25,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // TODO3 - ver si es necesar
 }); */
 
 // usamos /v1 para identificar la versión de la API.
-app.use(API_V1_ + "task", taskRoute);
+app.use(API_V1_ + "task", taskRoute); 
 app.use(API_V1_ + "user", userRoute);
 
 connectDB();
