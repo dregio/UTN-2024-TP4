@@ -1,4 +1,6 @@
-const DEFAULT_LANG = 'en';
+const DEFAULT_LANG = 'en'; // Se usa este idioma si la traducción no está disponible
+// en el idioma solicitado, o bien, si en un header de un request no se especifica
+// el idioma.
 
 const translations = {
     en: {},
@@ -12,6 +14,7 @@ export const msg = {
     NO_TASKS_FOUND: null,
     TASK_NOT_FOUND: null,
     INTERNAL_SERVER_ERROR: null,
+    TASK_DELETED: null,
     // Add more keys as needed
 };
 
@@ -45,6 +48,10 @@ t.es[msg.INTERNAL_SERVER_ERROR] = (m) => `Error interno del servidor. Mensaje: $
 t.fr[msg.INTERNAL_SERVER_ERROR] = (m) => `Erreur interne du serveur. Message: ${m}`;
 t.pt[msg.INTERNAL_SERVER_ERROR] = (m) => `Erro interno de servidor. Mensagem: ${m}`;
 
+t.en[msg.TASK_DELETED] = "Task deleted";
+t.es[msg.TASK_DELETED] = "Tarea eliminada";
+t.fr[msg.TASK_DELETED] = "Tâche supprimée";
+t.pt[msg.TASK_DELETED] = "Tarefa excluída";
 
 export function LangFromReq(req) {
     return new Lang(req.headers['accept-language'] || DEFAULT_LANG);

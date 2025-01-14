@@ -26,10 +26,10 @@ export const createTask = async (req, res) => {
     try {
         const newTask = new Task(req.body);
         await newTask.save();
-        res.status(201).json({ message: "Task created" });
+        res.status(201).json({ message: lang.tr(msg.TASK_CREATED) });
     }
     catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: lang.tr(msg.INTERNAL_SERVER_ERROR, error.message) });
     }
 }
 
@@ -40,11 +40,66 @@ export const getTask = async (req, res) => {
             .populate("project_id")
             .populate("user_id");
         if (!task) {
-            return res.status(404).json({ message: `Task ${id} not found.${mn(1001)}` });
+            return res.status(404).json({ 
+                message: lang.tr(msg.TASK_NOT_FOUND, id) });
         }
         res.status(200).json(task);
     }
     catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: lang.tr(msg.INTERNAL_SERVER_ERROR, error.message) });
     }
 }
+
+export const updateTask = async (req, res) => {
+    try {
+        const _id = req.params.id;
+        const task = await Task.findById(_id);
+        if (!task) {
+            return res.status(404).json({ 
+                message: lang.tr(msg.TASK_NOT_FOUND, _id) });
+        }
+
+        const updatedTask = await Task.findByIdAndUpdate(
+            _id, req.body, { new: true });;
+        res.status(201 ).json(updatedTask);
+    } 
+    catch (error) {
+        res.status(500).json({ message: lang.tr(msg.INTERNAL_SERVER_ERROR, error.message) });
+    }
+}
+
+export const deleteTask = async (req, res) => {
+    try {
+        const _id = req.params.id;
+        const task = await Task.findById(_id);
+        if (!task) {
+            return res.status(404).json({ 
+                message: lang.tr(msg.TASK_NOT_FOUND, _id) });
+        }
+        await Task.findByIdAndDelete(_id);
+        res.status(201).json({ message: lang.tr(msg.TASK_DELETED) });
+    }
+    catch (error) {
+        res.status(500).json({ message: lang.tr(msg.INTERNAL_SERVER_ERROR, error.message) });
+    }   
+}
+
+export const getTaskStatusList = async (req, res) => {
+    try {
+        return res.status(200).json(TaskStatus);
+    }
+    catch (error) {
+        res.status(500).json({ message: lang.tr(msg.INTERNAL_SERVER_ERROR, error.message) });
+    }
+}
+
+export const getTaskPriorityList = async (req, res) => {
+    try {
+        return res.status(200).json(TaskPrio);
+    }
+    catch (error) {
+        res.status(500).json({ message: lang.tr(msg.INTERNAL_SERVER_ERROR, error.message) });
+    }
+}
+
+export default { getTasks, createTask, getTask, updateTask, deleteTask, getTaskStatusList, getTaskPriorityList };
