@@ -1,6 +1,16 @@
-const DEFAULT_LANG = 'en'; // Se usa este idioma si la traducción no está disponible
-// en el idioma solicitado, o bien, si en un header de un request no se especifica
-// el idioma.
+const DEFAULT_LANG = 'es';
+// Este es el idioma por defecto. Se puede cambiar en el código a cualquiera
+// de los valores posibles (ver translations, abajo).
+//
+// En cada request se puede cambiar este idioma por otro, indicando en el
+// header del request la clave 'accept-language' y el valor correspondiente 
+// al idioma deseado, que será válido solamente en dicho request.
+//
+// Si una frase no está traducida al idioma solicitado, se utiliza la 
+// traducción en el idioma fallback, que por definición siempre debería tener
+// una traducción.
+
+const FALLBACK_LANG = 'en';
 
 const translations = {
     en: {},
@@ -10,13 +20,16 @@ const translations = {
 };
 
 export const msg = {
+    INTERNAL_SERVER_ERROR: null,
     TASK_CREATED: null,
     NO_TASKS_FOUND: null,
     TASK_NOT_FOUND: null,
-    INTERNAL_SERVER_ERROR: null,
     TASK_DELETED: null,
+    SERVER_RUNNING_ON_PORT: null
     // Add more keys as needed
 };
+// TODO3: Permitir agregar más mensajes sin tener que hacerlo por separado
+// en msg y en translations.
 
 // Asigna a cada valor de msg su propia clave. Esto permite una forma práctica 
 // de acceder luego a los valores de translations utilizando una constante
@@ -28,33 +41,48 @@ for (const key in msg) {
 }
 
 const t = translations;
-t.en[msg.TASK_CREATED] = "Task created";
-t.es[msg.TASK_CREATED] = "Tarea creada";
-t.fr[msg.TASK_CREATED] = "Tâche créée";
-t.pt[msg.TASK_CREATED] = "Tarefa criada";
+var m = msg.TASK_CREATED;
+t.en[m] = "Task created";
+t.es[m] = "Tarea creada";
+t.fr[m] = "Tâche créée";
+t.pt[m] = "Tarefa criada";
 
-t.en[msg.NO_TASKS_FOUND] = "No tasks found";
-t.es[msg.NO_TASKS_FOUND] = "No se encontraron tareas";
-t.fr[msg.NO_TASKS_FOUND] = "Aucune tâche trouvée";
-t.pt[msg.NO_TASKS_FOUND] = "Nenhuma tarefa encontrada";
+m = msg.NO_TASKS_FOUND;
+t.en[m] = "No tasks found";
+t.es[m] = "No se encontraron tareas";
+t.fr[m] = "Aucune tâche trouvée";
+t.pt[m] = "Nenhuma tarefa encontrada";
 
-t.en[msg.TASK_NOT_FOUND] = (id) => `Task ${id} not found.`;
-t.es[msg.TASK_NOT_FOUND] = (id) => `Tarea ${id} no encontrada.`;
-t.fr[msg.TASK_NOT_FOUND] = (id) => `Tâche ${id} non trouvée.`;
-t.pt[msg.TASK_NOT_FOUND] = (id) => `Tarefa ${id} não encontrada.`;
+m = msg.TASK_NOT_FOUND;
+t.en[m] = (id) => `Task ${id} not found.`;
+t.es[m] = (id) => `Tarea ${id} no encontrada.`;
+t.fr[m] = (id) => `Tâche ${id} non trouvée.`;
+t.pt[m] = (id) => `Tarefa ${id} não encontrada.`;
 
-t.en[msg.INTERNAL_SERVER_ERROR] = (m) => `Internal server error. Message: ${m}`;
-t.es[msg.INTERNAL_SERVER_ERROR] = (m) => `Error interno del servidor. Mensaje: ${m}`;
-t.fr[msg.INTERNAL_SERVER_ERROR] = (m) => `Erreur interne du serveur. Message: ${m}`;
-t.pt[msg.INTERNAL_SERVER_ERROR] = (m) => `Erro interno de servidor. Mensagem: ${m}`;
+m = msg.INTERNAL_SERVER_ERROR;
+t.en[m] = (m) => `Internal server error. Message: ${m}`;
+t.es[m] = (m) => `Error interno del servidor. Mensaje: ${m}`;
+t.fr[m] = (m) => `Erreur interne du serveur. Message: ${m}`;
+t.pt[m] = (m) => `Erro interno de servidor. Mensagem: ${m}`;
 
-t.en[msg.TASK_DELETED] = "Task deleted";
-t.es[msg.TASK_DELETED] = "Tarea eliminada";
-t.fr[msg.TASK_DELETED] = "Tâche supprimée";
-t.pt[msg.TASK_DELETED] = "Tarefa excluída";
+m = msg.TASK_DELETED;
+t.en[m] = "Task deleted";
+t.es[m] = "Tarea eliminada";
+t.fr[m] = "Tâche supprimée";
+t.pt[m] = "Tarefa excluída";
+
+m = msg.SERVER_RUNNING_ON_PORT;
+t.en[m] = (port) => `Server running on port ${port}`;
+t.es[m] = (port) => `Servidor corriendo en puerto ${port}`;
+t.fr[m] = (port) => `Serveur en cours d'exécution sur le port ${port}`;
+t.pt[m] = (port) => `Servidor rodando na porta ${port}`;
 
 export function LangFromReq(req) {
-    return new Lang(req.headers['accept-language'] || DEFAULT_LANG);
+    var language = req.headers['accept-language'];
+    if (!language || !translations[language]) {
+        language = DEFAULT_LANG;
+    }
+    return new Lang(language);
 }
 
 class Lang {
@@ -63,8 +91,11 @@ class Lang {
     }
 
     tr(key, ...args) {
-        const message = translations[this.lang][key];
-        return typeof message === 'function' ? message(...args) : message;
+        var translation = translations[this.lang][key];
+        if (!translation) {
+            translation = translations[FALLBACK_LANG][key];
+        }
+        return typeof translation === 'function' ? translation(...args) : translation;
     }
 }
 

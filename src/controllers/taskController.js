@@ -25,6 +25,7 @@ export const taskController = {
     // el nombre de un proyecto no se puede repetir. 
     // TODO3: Agregarlo al Readme.
     createTask: async (req, res) => {
+        const lang = LangFromReq(req);
         try {
             const newTask = new Task(req.body);
             await newTask.save();
@@ -36,6 +37,7 @@ export const taskController = {
     },
 
     getTask: async (req, res) => {
+        const lang = LangFromReq(req);
         try {
             const id = req.params.id;
             const task = await Task.findById(id)
@@ -48,11 +50,17 @@ export const taskController = {
             res.status(200).json(task);
         }
         catch (error) {
-            res.status(500).json({ message: lang.tr(msg.INTERNAL_SERVER_ERROR, error.message) });
+            const stackTrace = error.stack.split('\n');
+            res.status(500).json({
+                message: lang.tr(msg.INTERNAL_SERVER_ERROR),
+                error: error.message,
+                location: stackTrace
+            });
         }
     },
 
     updateTask: async (req, res) => {
+        const lang = LangFromReq(req);
         try {
             const _id = req.params.id;
             const task = await Task.findById(_id);
@@ -71,6 +79,7 @@ export const taskController = {
     },
 
     deleteTask: async (req, res) => {
+        const lang = LangFromReq(req);
         try {
             const _id = req.params.id;
             const task = await Task.findById(_id);
@@ -87,6 +96,7 @@ export const taskController = {
     },
 
     getTaskStatusList: async (req, res) => {
+        const lang = LangFromReq(req);
         try {
             return res.status(200).json(TaskStatus);
         }
@@ -96,6 +106,7 @@ export const taskController = {
     },
 
     getTaskPriorityList: async (req, res) => {
+        const lang = LangFromReq(req);
         try {
             return res.status(200).json(TaskPrio);
         }

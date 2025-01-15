@@ -23,7 +23,6 @@ const taskSchema = mongoose.Schema({
     title: {
         type: String,
         required: [true, "Task title is required"],
-        unique: true,
         trim: true,
         maxlength: [100, "Task title cannot be more than 100 characters"],
     },
@@ -79,10 +78,6 @@ const taskSchema = mongoose.Schema({
     modified_at: {
         type: Date,
         default: Date.now
-    },
-    picture: {
-        type: String,
-        default: "https://picsum.photos/200"    // TODO2: pasar a Project.
     }
 })
 
