@@ -60,10 +60,10 @@ t.fr[m] = (id) => `Tâche ${id} non trouvée.`;
 t.pt[m] = (id) => `Tarefa ${id} não encontrada.`;
 
 m = msg.INTERNAL_SERVER_ERROR;
-t.en[m] = (m) => `Internal server error. Message: ${m}`;
-t.es[m] = (m) => `Error interno del servidor. Mensaje: ${m}`;
-t.fr[m] = (m) => `Erreur interne du serveur. Message: ${m}`;
-t.pt[m] = (m) => `Erro interno de servidor. Mensagem: ${m}`;
+t.en[m] = "Internal server error.";
+t.es[m] = "Error interno del servidor";
+t.fr[m] = "Erreur interne du serveur.";
+t.pt[m] = "Erro interno de servidor.";
 
 m = msg.TASK_DELETED;
 t.en[m] = "Task deleted";
@@ -96,6 +96,25 @@ class Lang {
             translation = translations[FALLBACK_LANG][key];
         }
         return typeof translation === 'function' ? translation(...args) : translation;
+    }
+
+    /*  errorObj(error, key, ...args)
+        
+        error: Error de try..catch.
+        key: Clave de mensaje de traducción.
+        args: Argumentos opcionales para el mensaje de traducción.
+    
+    Se usa en los Controllers para generar el objeto que se envía en los 
+    catch de los requests.
+    Ventajas: incluye el mensaje de error traducido; 
+    incluye el mensaje de error; incluye el volcado de stack. 
+    */
+    errorObj(error, key, ...args) {
+        return {
+            message: this.tr(key, ...args),
+            error: error.message,
+            stack: error.stack  // TODO3: Hacerlo condicional, para no enviar el stack en producción.
+        };
     }
 }
 
