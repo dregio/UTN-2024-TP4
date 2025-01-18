@@ -15,8 +15,7 @@ export const taskController = {
             res.status(200).json(tasks);
         }
         catch (error) {
-            res.status(500).json(
-                lang.errorObj(error, msg.INTERNAL_SERVER_ERROR));
+            res.status(500).json(lang.internalServerErrorObj(error));
         }
     },
 
@@ -30,11 +29,10 @@ export const taskController = {
         try {
             const newTask = new Task(req.body);
             await newTask.save();
-            res.status(201).json({ message: lang.tr(msg.TASK_CREATED) });
+            res.status(201).json(newTask);
         }
         catch (error) {
-            res.status(500).json(
-                lang.errorObj(error, msg.INTERNAL_SERVER_ERROR));
+            res.status(500).json(lang.internalServerErrorObj(error));
         }
     },
 
@@ -52,9 +50,7 @@ export const taskController = {
             res.status(200).json(task);
         }
         catch (error) {
-            const stackTrace = error.stack.split('\n');
-            res.status(500).json(
-                lang.errorObj(error, msg.INTERNAL_SERVER_ERROR));
+            res.status(500).json(lang.internalServerErrorObj(error));
         }
     },
 
@@ -69,12 +65,11 @@ export const taskController = {
             }
 
             const updatedTask = await Task.findByIdAndUpdate(
-                _id, req.body, { new: true });;
-            res.status(201 ).json(updatedTask);
+                _id, req.body, { new: true });
+            res.status(201).json(lang.resMsjObj(updatedTask, msg.TASK_UPDATED));
         } 
         catch (error) {
-            res.status(500).json(
-                lang.errorObj(error, msg.INTERNAL_SERVER_ERROR));
+            res.status(500).json(lang.internalServerErrorObj(error));
         }
     },
 
@@ -88,11 +83,10 @@ export const taskController = {
                     message: lang.tr(msg.TASK_NOT_FOUND, _id) });
             }
             await Task.findByIdAndDelete(_id);
-            res.status(201).json({ message: lang.tr(msg.TASK_DELETED) });
+            res.status(201).json(lang.resMsjObj(task, msg.TASK_DELETED));
         }
         catch (error) {
-            res.status(500).json(
-                lang.errorObj(error, msg.INTERNAL_SERVER_ERROR));
+            res.status(500).json(lang.internalServerErrorObj(error));
         }   
     },
 
@@ -102,8 +96,7 @@ export const taskController = {
             return res.status(200).json(TaskStatus);
         }
         catch (error) {
-            res.status(500).json(
-                lang.errorObj(error, msg.INTERNAL_SERVER_ERROR));
+            res.status(500).json(lang.internalServerErrorObj(error));
         }
     },
 
@@ -113,8 +106,7 @@ export const taskController = {
             return res.status(200).json(TaskPrio);
         }
         catch (error) {
-            res.status(500).json(
-                lang.errorObj(error, msg.INTERNAL_SERVER_ERROR));
+            res.status(500).json(lang.internalServerErrorObj(error));
         }
     }
 }

@@ -13,7 +13,7 @@ export const projectController = {
             res.status(200).json(projects);
         }
         catch (error) {
-            res.status(500).json({ message: lang.tr(msg.INTERNAL_SERVER_ERROR, error.message) });
+            res.status(500).json(lang.internalServerErrorObj(error));
         }
     },
 
@@ -22,10 +22,10 @@ export const projectController = {
         try {
             const newProject = new Project(req.body);
             await newProject.save();
-            res.status(201).json({ message: lang.tr(msg.PROJECT_CREATED) });
+			res.status(201).json(lang.resMsjObj(newProject, msg.PROJECT_CREATED));
         }
         catch (error) {
-            res.status(500).json({ message: lang.tr(msg.INTERNAL_SERVER_ERROR, error.message) });
+            res.status(500).json(lang.internalServerErrorObj(error));
         }
     },
 
@@ -43,7 +43,7 @@ export const projectController = {
             res.status(200).json(project);
         }
         catch (error) {
-            res.status(500).json({ message: lang.tr(msg.INTERNAL_SERVER_ERROR, error.message) });
+            res.status(500).json(lang.internalServerErrorObj(error));
         }
     },
 
@@ -59,10 +59,10 @@ export const projectController = {
 
             const updatedProject = await Project.findByIdAndUpdate(
                 _id, req.body, { new: true });;
-            res.status(201 ).json(updatedProject);
+            res.status(201 ).json(lang.resMsjObj(updatedProject, msg.PROJECT_UPDATED));
         } 
         catch (error) {
-            res.status(500).json({ message: lang.tr(msg.INTERNAL_SERVER_ERROR, error.message) });
+            res.status(500).json(lang.internalServerErrorObj(error));
         }
     },
 
@@ -76,10 +76,10 @@ export const projectController = {
                     message: lang.tr(msg.PROJECT_NOT_FOUND, _id) });
             }
             await Project.findByIdAndDelete(_id);
-            res.status(201).json({ message: lang.tr(msg.PROJECT_DELETED) });
+            res.status(201).json(lang.resMsjObj(project, msg.PROJECT_DELETED));
         }
         catch (error) {
-            res.status(500).json({ message: lang.tr(msg.INTERNAL_SERVER_ERROR, error.message) });
+            res.status(500).json(lang.internalServerErrorObj(error));
         }   
     }
 }
