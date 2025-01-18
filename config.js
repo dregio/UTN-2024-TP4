@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import lang from "./src/utils/lang.js";
+import lang from "./src/utils/multiLanguage.js";
 
 dotenv.config();
 

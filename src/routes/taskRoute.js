@@ -10,7 +10,8 @@ taskRoute.get("/status", tc.getTaskStatusList); // TODO2: Agregar verifyTokenMid
 taskRoute.get("/prio", tc.getTaskPriorityList); // ACÁ también.
 taskRoute.post("/create", tc.createTask);
 taskRoute.get("/get-by-id/:id", tc.getTask); // ACÁ también.
-taskRoute.put("/update/:id", tc.updateTask)
-taskRoute.delete("/delete/:id", tc.deleteTask)
+taskRoute.put("/update/:id", tc.updateTask);
+taskRoute.delete("/delete/:id", tc.deleteTask);
+
 
 export default taskRoute;

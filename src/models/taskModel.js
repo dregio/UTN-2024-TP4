@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+// TODO3: Falta internacionalizar.
+
 const TaskStatus = Object.freeze({
     NOT_STARTED: "Not started",
     STARTED: "Started",

@@ -1,5 +1,5 @@
 import Project from "../models/projectModel.js";
-import { LangFromReq, msg } from "../utils/lang.js";
+import { LangFromReq, msg } from "../utils/multiLanguage.js";
 
 export const projectController = {
 
@@ -33,9 +33,7 @@ export const projectController = {
         const lang = LangFromReq(req);
         try {
             const id = req.params.id;
-            const project = await Project.findById(id)
-                .populate("project_id")
-                .populate("user_id");
+            const project = await Project.findById(id);
             if (!project) {
                 return res.status(404).json({ 
                     message: lang.tr(msg.PROJECT_NOT_FOUND, id) });
@@ -70,6 +68,7 @@ export const projectController = {
         const lang = LangFromReq(req);
         try {
             const _id = req.params.id;
+            console.log("🚀 ~ deleteProject: ~ _id:", _id)
             const project = await Project.findById(_id);
             if (!project) {
                 return res.status(404).json({ 

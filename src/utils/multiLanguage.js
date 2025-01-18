@@ -26,6 +26,7 @@ export const msg = {
     CONNECTING_TO_DB: null,
     SERVER_RUNNING_ON_PORT: null,
     INTERNAL_SERVER_ERROR: null,
+    
     // Users   
     NO_USERS_FOUND: null,
     USER_ALREADY_EXISTS: null,
@@ -33,17 +34,33 @@ export const msg = {
     USER_NOT_FOUND: null,
     USER_UPDATED: null,
     USER_DELETED: null,
+
     // Tasks
     NO_TASKS_FOUND: null,
     TASK_CREATED: null,
     TASK_NOT_FOUND: null,
     TASK_DELETED: null,
+    
     // Projects
     PROJECT_NOT_FOUND: null,
     NO_PROJECTS_FOUND: null,
     PROJECT_CREATED: null,
     PROJECT_UPDATED: null,
+    PROJECT_DELETED: null,
 
+    // Schemas
+    USERNAME_FIELD: null,
+    PASSWORD_FIELD: null,
+    EMAIL_FIELD: null,
+    FIELD_MAX_LENGTH: null,
+    FIELD_REQUIRED: null,
+    INVALID_EMAIL: null,
+
+    // Traducción desconocida. Cuando no se encuentra una traducción para una
+    // clave en el idioma solicitado ni en el idioma fallback, se utiliza este
+    // mensaje. Importante: éste tiene que ser el último elemento de la lista,
+    // para que sea el devuelto cuando no se encuentra el buscado.
+    UNKNOWN_TRANSLATION: null
 };
 // TODO3: Permitir agregar más mensajes sin tener que hacerlo por separado
 // en msg y en translations.
@@ -174,16 +191,72 @@ t.es[m] = "Proyecto actualizado";
 t.fr[m] = "Projet mis à jour";
 t.pt[m] = "Projeto atualizado";
 
+m = msg.PROJECT_DELETED;
+t.en[m] = "Project deleted";
+t.es[m] = "Proyecto eliminado";
+t.fr[m] = "Projet supprimé";
+t.pt[m] = "Projeto excluído";
+
+// Schemas
+m = msg.FIELD_REQUIRED;
+t.en[m] = (field) => `The field ${field} is required.`;
+t.es[m] = (field) => `El campo ${field} es requerido.`;
+t.fr[m] = (field) => `Le champ ${field} est requis.`;
+t.pt[m] = (field) => `O campo ${field} é obrigatório.`;
+
+m = msg.USERNAME_FIELD;
+t.en[m] = "User name";
+t.es[m] = "Nombre de usuario";
+t.fr[m] = "Nom d'utilisateur";
+t.pt[m] = "Nome de usuário";
+
+m = msg.PASSWORD_FIELD;
+t.en[m] = "Password";
+t.es[m] = "Contraseña";
+t.fr[m] = "Mot de passe";
+t.pt[m] = "Senha";
+
+m = msg.EMAIL_FIELD;
+t.en[m] = "Email";
+t.es[m] = "Correo electrónico";
+t.fr[m] = "Email";
+t.pt[m] = "Email";
+
+m = msg.FIELD_MAX_LENGTH;
+t.en[m] = (field, length) => `The field ${field} cannot be more than ${length} characters.`;
+t.es[m] = (field, length) => `El campo ${field} no puede tener más de ${length} caracteres.`;
+t.fr[m] = (field, length) => `Le champ ${field} ne peut pas dépasser ${length} caractères.`;
+t.pt[m] = (field, length) => `O campo ${field} não pode ter mais de ${length} caracteres.`;
+
+m = msg.INVALID_EMAIL;
+t.en[m] = "Invalid email";
+t.es[m] = "Correo electrónico inválido";
+t.fr[m] = "Email invalide";
+t.pt[m] = "Email inválido";
+
+m = msg.INVALID_ROLE;
+t.en[m] = "Invalid role";
+t.es[m] = "Rol inválido";
+t.fr[m] = "Rôle invalide";
+t.pt[m] = "Função inválida";
+
+m = msg.UNKNOWN_TRANSLATION;
+t.en[m] = "Unknown translation";
+t.es[m] = "Traducción desconocida";
+t.fr[m] = "Traduction inconnue";
+t.pt[m] = "Tradução desconhecida";
+
+
 
 export function LangFromReq(req) {
     var language = req.headers['accept-language'];
     if (!language || !translations[language]) {
         language = DEFAULT_LANG;
     }
-    return new Lang(language);
+    return new MultiLanguage(language);
 }
 
-class Lang {
+class MultiLanguage {
     constructor(lang = DEFAULT_LANG) {
         this.lang = lang;
     }
@@ -231,4 +304,4 @@ class Lang {
     
 }
 
-export default Lang;
+export default MultiLanguage;

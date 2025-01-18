@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import MultiLanguage, {msg} from "../utils/multiLanguage.js";
 
 const Roles = Object.freeze({
     USER: "User",
@@ -6,32 +7,41 @@ const Roles = Object.freeze({
     PM: "Project manager"
 });
 
+const lang = new MultiLanguage();
+
 const userSchema = mongoose.Schema({
+    
     // campo _id: es generado por mongoDB
     name: {
         type: String,
-        required: [true, "User name is required"],
+        required: [true, lang.tr(msg.FIELD_REQUIRED, lang.tr(msg.USERNAME_FIELD))],
         unique: true,
         trim: true,
-        maxlength: [100, "User name cannot be more than 30 characters"],
+        maxlength: [
+            100, lang.tr(msg.FIELD_MAX_LENGTH, lang.tr(msg.USERNAME_FIELD), 
+            100)],
     },
     password: {
         type: String,
-        required: [true, "User password is required"],
+        required: [true,  lang.tr(msg.FIELD_REQUIRED, lang.tr(msg.PASSWORD_FIELD))],
         trim: true,
-        maxlength: [100, "User password cannot be more than 100 characters"],
+        maxlength: [
+            30, lang.tr(msg.FIELD_MAX_LENGTH, lang.tr(msg.PASSWORD_FIELD), 
+            30)],
     },
     email: {
         type: String,
-        required: [true, "User email is required"],
+        required: [true, lang.tr(msg.FIELD_REQUIRED, lang.tr(msg.EMAIL_FIELD))],
         unique: true,
         trim: true,
-        maxlength: [100, "User email cannot be more than 100 characters"],
+        maxlength: [
+            100, lang.tr(msg.FIELD_MAX_LENGTH, lang.tr(msg.EMAIL_FIELD), 
+            100)],
         validate: {
             validator: function (v) {
                 return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(v);
             },
-            message: props => `${props.value} is not a valid email`
+            message: lang.tr(msg.INVALID_EMAIL)
         }
     },
     role: {
@@ -43,7 +53,7 @@ const userSchema = mongoose.Schema({
             validator: function (v) {
                 return Object.keys(Roles).includes(v);
             },
-            message: props => `${props.value} is not a valid role`
+            message: lang.tr(msg.INVALID_ROLE)
         }
     },
     createdAt: {

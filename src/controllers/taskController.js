@@ -1,5 +1,5 @@
 import Task from "../models/taskModel.js";
-import { LangFromReq, msg } from "../utils/lang.js";
+import { LangFromReq, msg } from "../utils/multiLanguage.js";
 
 export const taskController = {
 

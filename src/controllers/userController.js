@@ -1,5 +1,5 @@
 import User from "../models/userModel.js";
-import Lang, { LangFromReq, msg } from "../utils/lang.js";
+import { LangFromReq, msg } from "../utils/multiLanguage.js";
 
 const userController = {
 

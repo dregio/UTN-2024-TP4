@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+// TODO3: Falta internacionalizar.
+
 const projectSchema = mongoose.Schema({
     // campo _id: es generado por mongoDB
     name: {
