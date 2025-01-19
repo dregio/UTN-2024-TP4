@@ -21,6 +21,11 @@ export const projectController = {
         const lang = LangFromReq(req);
         try {
             const newProject = new Project(req.body);
+            const { name } = newProject;
+            const existingProject = await Project.findOne({ name });
+            if (existingProject) {
+                return res.status(409).json({ message: lang.tr(msg.PROJECT_ALREADY_EXISTS) });
+            }
             await newProject.save();
 			res.status(201).json(lang.resMsjObj(newProject, msg.PROJECT_CREATED));
         }

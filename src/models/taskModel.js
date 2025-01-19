@@ -9,7 +9,7 @@ const TaskStatus = Object.freeze({
 });
 
 const TaskPrio = Object.freeze({
-    0: "N/A",
+    "0": "N/A",
     1: "1",
     2: "2",
     3: "3"
@@ -42,7 +42,7 @@ const taskSchema = mongoose.Schema({
     status: {
         type: String,
         required: true,
-        default: "NOT STARTED",
+        default: "NOT_STARTED",
         enum: Object.keys(TaskStatus),
         validate: {
             validator: function (v) {
@@ -52,7 +52,7 @@ const taskSchema = mongoose.Schema({
         }
     },
     priority: {
-        type: Number,
+        type: String,
         required: true,
         default: 0,
         enum: Object.keys(TaskPrio),

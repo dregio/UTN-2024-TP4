@@ -25,7 +25,7 @@ const userController = {
 
 			const existingUser = await User.findOne({ email });
 			if (existingUser) {
-				return res.status(400).json({ message: lang.tr(msg.USER_ALREADY_EXISTS) });
+				return res.status(409).json({ message: lang.tr(msg.USER_ALREADY_EXISTS) });
 			}
 
 			await newUser.save();

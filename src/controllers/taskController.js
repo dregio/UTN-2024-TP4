@@ -1,3 +1,4 @@
+import { get } from "mongoose";
 import Task from "../models/taskModel.js";
 import { LangFromReq, msg } from "../utils/multiLanguage.js";
 
@@ -28,6 +29,11 @@ export const taskController = {
         const lang = LangFromReq(req);
         try {
             const newTask = new Task(req.body);
+            const existingTask = await Task.findOne({ number: newTask.number })
+            if (existingTask) {
+                return res.status(409).json({ 
+                    message: lang.tr(msg.TASK_NUMBER_ALREADY_EXISTS, newTask.number) });
+            }
             await newTask.save();
             res.status(201).json(newTask);
         }
@@ -48,6 +54,43 @@ export const taskController = {
                     message: lang.tr(msg.TASK_NOT_FOUND, id) });
             }
             res.status(200).json(task);
+        }
+        catch (error) {
+            res.status(500).json(lang.internalServerErrorObj(error));
+        }
+    },
+
+    getTaskByNumber: async (req, res) => {
+        const lang = LangFromReq(req);
+        try {
+            const number = req.params.number;
+            const task = await Task.findOne({ number })
+                .populate("project_id")
+                .populate("user_id");
+            if (!task) {
+                return res.status(404).json({
+                    message: lang.tr(msg.TASK_NOT_FOUND, number) });
+            }
+            res.status(200).json(task);
+        }
+        catch (error) {
+            res.status(500).json(lang.internalServerErrorObj(error));
+        }
+    },
+
+    getTasksByProject: async (req, res) => {
+        const lang = LangFromReq(req);
+        try {
+            const project_id = req.params.id;
+            console.log("🚀 ~ getTasksByProject: ~ id:", project_id)
+            const tasks = await Task.find({ project_id })
+                .populate("project_id")
+                .populate("user_id");
+            if (tasks.length === 0) {
+                return res.status(204).json({ 
+                    message: lang.tr(msg.NO_TASKS_FOR_PROJECT) });
+                };
+            res.status(200).json(tasks);
         }
         catch (error) {
             res.status(500).json(lang.internalServerErrorObj(error));

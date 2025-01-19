@@ -37,13 +37,16 @@ export const msg = {
 
     // Tasks
     NO_TASKS_FOUND: null,
+    NO_TASKS_FOR_PROJECT: null,
     TASK_CREATED: null,
     TASK_NOT_FOUND: null,
     TASK_DELETED: null,
+    TASK_NUMBER_ALREADY_EXISTS: null,
     
     // Projects
     PROJECT_NOT_FOUND: null,
     NO_PROJECTS_FOUND: null,
+    PROJECT_ALREADY_EXISTS: null,
     PROJECT_CREATED: null,
     PROJECT_UPDATED: null,
     PROJECT_DELETED: null,
@@ -104,10 +107,10 @@ t.fr[m] = "Aucun utilisateur trouvé";
 t.pt[m] = "Nenhum usuário encontrado";
 
 m = msg.USER_ALREADY_EXISTS;
-t.en[m] = "User already exists";
-t.es[m] = "El usuario ya existe";
-t.fr[m] = "L'utilisateur existe déjà";
-t.pt[m] = "Usuário já existe";
+t.en[m] = "A user with that email already exists";
+t.es[m] = "Ya existe un usuario con el correo especificado";
+t.fr[m] = "Un utilisateur avec l'email spécifié existe déjà";
+t.pt[m] = "Já existe um usuário com o email especificado";
 
 m = msg.USER_CREATED;
 t.en[m] = "User created";
@@ -141,6 +144,12 @@ t.es[m] = "No se encontraron tareas";
 t.fr[m] = "Aucune tâche trouvée";
 t.pt[m] = "Nenhuma tarefa encontrada";
 
+m = msg.NO_TASKS_FOR_PROJECT;
+t.en[m] = "No tasks found for this project";
+t.es[m] = "No se encontraron tareas para este proyecto";
+t.fr[m] = "Aucune tâche trouvée pour ce projet";
+t.pt[m] = "Nenhuma tarefa encontrada para este projeto";
+
 m = msg.TASK_CREATED;
 t.en[m] = "Task created";
 t.es[m] = "Tarea creada";
@@ -165,6 +174,12 @@ t.es[m] = "Tarea eliminada";
 t.fr[m] = "Tâche supprimée";
 t.pt[m] = "Tarefa excluída";
 
+m = msg.TASK_NUMBER_ALREADY_EXISTS;
+t.en[m] = (number) => `A task with number ${number} already exists.`;
+t.es[m] = (number) => `Ya existe una tarea con el número ${number}.`;
+t.fr[m] = (number) => `Une tâche avec le numéro ${number} existe déjà.`;
+t.pt[m] = (number) => `Já existe uma tarefa com o número ${number}.`;
+
 // Projects
 
 m = msg.PROJECT_NOT_FOUND;
@@ -178,6 +193,12 @@ t.en[m] = "No projects found";
 t.es[m] = "No se encontraron proyectos";
 t.fr[m] = "Aucun projet trouvé";
 t.pt[m] = "Nenhum projeto encontrado";
+
+m = msg.PROJECT_ALREADY_EXISTS;
+t.en[m] = "A project with that name already exists";
+t.es[m] = "Ya existe un proyecto con ese nombre";
+t.fr[m] = "Un projet avec ce nom existe déjà";
+t.pt[m] = "Já existe um projeto com esse nome";
 
 m = msg.PROJECT_CREATED;
 t.en[m] = "Project created";
