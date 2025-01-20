@@ -12,7 +12,6 @@
       - verifyToken.js (opcional)
       - validators.js (opcional)
 
-  1. testear un poco la API con postman.
   2. agregar login y autenticación.
   3. testear la API con postman.
   5. Ver los TODOS.
