@@ -2,7 +2,7 @@ import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { LangFromReq, msg } from "../utils/multiLanguage.js";
-import { SESSION_SECRET } from "../../config.js";
+import { SESSION_SECRET } from "../../src/config.js";
 
 const userController = {
 
@@ -93,7 +93,7 @@ const userController = {
 		}
 	},
 
-	validate: async (req, res) => {
+	login: async (req, res) => {
 		const lang = LangFromReq(req);
 		try {
 			const user = await User.findOne({ email: req.body.email });

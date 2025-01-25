@@ -2,7 +2,7 @@ export var DEFAULT_LANG = 'es';
 // Este es el idioma por defecto. Se puede cambiar en el código a cualquiera
 // de los valores posibles (ver translations, abajo).
 //
-// El idioma se configura en el archivo .env, en la variable DEFAULT_LANGUAGE.
+// El idioma se configura en el archivo .env, en la variable DEFAULT_LANG.
 //
 // En cada request se puede cambiar este idioma por otro, indicando en el
 // header del request la clave 'accept-language' y el valor correspondiente 
@@ -11,6 +11,10 @@ export var DEFAULT_LANG = 'es';
 // Si una frase no está traducida al idioma solicitado, se utiliza la 
 // traducción en el idioma fallback, que por definición siempre debería tener
 // una traducción.
+
+export function setDefaultLang(lang) {
+	DEFAULT_LANG = lang;
+}
 
 const FALLBACK_LANG = 'en';
 
@@ -26,6 +30,8 @@ export const msg = {
     CONNECTING_TO_DB: null,
     SERVER_RUNNING_ON_PORT: null,
     INTERNAL_SERVER_ERROR: null,
+	NO_TOKEN_PROVIDED: null,
+	INVALID_TOKEN: null,
     
     // Users   
     NO_USERS_FOUND: null,
@@ -100,6 +106,18 @@ t.en[m] = "Internal server error.";
 t.es[m] = "Error interno del servidor";
 t.fr[m] = "Erreur interne du serveur.";
 t.pt[m] = "Erro interno de servidor.";
+
+m = msg.NO_TOKEN_PROVIDED;
+t.en[m] = "No token provided";
+t.es[m] = "No se proporcionó un token";
+t.fr[m] = "Aucun jeton fourni";
+t.pt[m] = "Nenhum token fornecido";
+
+m = msg.INVALID_TOKEN;
+t.en[m] = "Invalid token";
+t.es[m] = "Token inválido";
+t.fr[m] = "Jeton invalide";
+t.pt[m] = "Token inválido";
 
 // Users
 

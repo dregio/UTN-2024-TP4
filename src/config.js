@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
-import lang from "./src/utils/multiLanguage.js";
+import {DEFAULT_LANG, setDefaultLang} from "./utils/multiLanguage.js";
+
 
 dotenv.config();
 
@@ -17,4 +18,7 @@ export const SESSION_SECRET = process.env.SESSION_SECRET
 // que cualquier módulo que necesite los recursos de lang.js no necesite
 // importar también este archivo.
 
-lang.DEFAULT_LANG = process.env.DEFAULT_LANGUAGE || lang.DEFAULT_LANG;
+const lang = process.env.DEFAULT_LANGUAGE;
+if (lang) {
+	setDefaultLang(lang);
+}

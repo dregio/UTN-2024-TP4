@@ -1,17 +1,18 @@
 import { Router } from 'express';
 import tc from '../controllers/taskController.js';
+import verifyTokenMiddleware from '../middlewares/verifyTokenMiddleware.js';
 
 const taskRoute = Router();
 
-taskRoute.get("/get", tc.getTasks);
-taskRoute.post("/create", tc.createTask);
-taskRoute.get("/get-by-id/:id", tc.getTask); // ACÁ también.
-taskRoute.get("/get-by-number/:number", tc.getTaskByNumber);
-taskRoute.get("/get-by-project-id/:id", tc.getTasksByProject);
-taskRoute.put("/update/:id", tc.updateTask);
-taskRoute.delete("/delete/:id", tc.deleteTask);
-taskRoute.get("/status", tc.getTaskStatusList); // TODO2: Agregar verifyTokenMiddleware
-taskRoute.get("/prio", tc.getTaskPriorityList); // ACÁ también.
+taskRoute.get(	 "/get", 					verifyTokenMiddleware, tc.getTasks);
+taskRoute.post(	 "/create",					verifyTokenMiddleware, tc.createTask);
+taskRoute.get(	 "/get-by-id/:id",			verifyTokenMiddleware, tc.getTask); 
+taskRoute.get(	 "/get-by-number/:number",	verifyTokenMiddleware, tc.getTaskByNumber);
+taskRoute.get(	 "/get-by-project-id/:id",	verifyTokenMiddleware, tc.getTasksByProject);
+taskRoute.put(	 "/update/:id",				verifyTokenMiddleware, tc.updateTask);
+taskRoute.delete("/delete/:id",				verifyTokenMiddleware, tc.deleteTask);
+taskRoute.get(	 "/status",					tc.getTaskStatusList);
+taskRoute.get(   "/prio",					tc.getTaskPriorityList);
 
 
 export default taskRoute;
