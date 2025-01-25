@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import MultiLanguage, {msg} from "../utils/multiLanguage.js";
+import bcrypt from "bcrypt";
 
 const Roles = Object.freeze({
     USER: "User",
@@ -24,10 +25,19 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: [true,  lang.tr(msg.FIELD_REQUIRED, lang.tr(msg.PASSWORD_FIELD))],
-        trim: true,
         maxlength: [
             30, lang.tr(msg.FIELD_MAX_LENGTH, lang.tr(msg.PASSWORD_FIELD), 
             30)],
+		validate: {
+			validator: function (v) {
+				const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+				return regex.test(v);
+			},
+			message: lang.tr(msg.INVALID_PASSWORD),
+		},
+		set: function (v) {
+			return bcrypt.hashSync(v, 10);
+		}
     },
     email: {
         type: String,

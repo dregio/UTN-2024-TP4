@@ -54,10 +54,13 @@ export const msg = {
     // Schemas
     USERNAME_FIELD: null,
     PASSWORD_FIELD: null,
+	INVALID_PASSWORD: null,
     EMAIL_FIELD: null,
     FIELD_MAX_LENGTH: null,
     FIELD_REQUIRED: null,
     INVALID_EMAIL: null,
+	INVALID_ROLE: null,
+	LOGGED_IN: null,
 
     // Traducción desconocida. Cuando no se encuentra una traducción para una
     // clave en el idioma solicitado ni en el idioma fallback, se utiliza este
@@ -237,6 +240,12 @@ t.es[m] = "Contraseña";
 t.fr[m] = "Mot de passe";
 t.pt[m] = "Senha";
 
+m = msg.INVALID_PASSWORD;
+t.en[m] = "Invalid password. It must have at least 8 characters, including a letter and a number.";
+t.es[m] = "Contraseña inválida. Debe tener al menos 8 caracteres, incluyendo una letra y un número.";
+t.fr[m] = "Mot de passe invalide. Il doit comporter au moins 8 caractères, dont une lettre et un chiffre.";
+t.pt[m] = "Senha inválida. Deve ter pelo menos 8 caracteres, incluindo uma letra e um número.";
+
 m = msg.EMAIL_FIELD;
 t.en[m] = "Email";
 t.es[m] = "Correo electrónico";
@@ -260,6 +269,12 @@ t.en[m] = "Invalid role";
 t.es[m] = "Rol inválido";
 t.fr[m] = "Rôle invalide";
 t.pt[m] = "Função inválida";
+
+m = msg.LOGGED_IN;
+t.en[m] = "Logged in";
+t.es[m] = "Sesión iniciada";
+t.fr[m] = "Connecté";
+t.pt[m] = "Conectado";
 
 m = msg.UNKNOWN_TRANSLATION;
 t.en[m] = "Unknown translation";
