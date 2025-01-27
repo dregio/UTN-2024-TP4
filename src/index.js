@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { connectDB } from "./db.js";
+import { connectDB } from "./db/db.js";
 import userRoute from "./routes/userRoute.js";
 import taskRoute from "./routes/taskRoute.js";
 import projectRoute from "./routes/projectRoute.js";
