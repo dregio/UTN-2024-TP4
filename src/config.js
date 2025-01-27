@@ -22,3 +22,9 @@ const lang = process.env.DEFAULT_LANGUAGE;
 if (lang) {
 	setDefaultLang(lang);
 }
+
+export let debugging = false;
+
+export function setDebugging(value) {
+	debugging = value;
+}

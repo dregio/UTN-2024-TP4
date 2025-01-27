@@ -1,3 +1,4 @@
+import { debugging } from "../config.js";
 import Project from "../models/projectModel.js";
 import { LangFromReq, msg } from "../utils/multiLanguage.js";
 
@@ -73,7 +74,7 @@ export const projectController = {
         const lang = LangFromReq(req);
         try {
             const _id = req.params.id;
-            console.log("🚀 ~ deleteProject: ~ _id:", _id)
+            debugging && console.log("🚀 ~ deleteProject: ~ _id:", _id)
             const project = await Project.findById(_id);
             if (!project) {
                 return res.status(404).json({ 

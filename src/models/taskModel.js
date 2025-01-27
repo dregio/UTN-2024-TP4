@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 
 // TODO3: Falta internacionalizar.
 
-const TaskStatus = Object.freeze({
+export const TaskStatus = Object.freeze({
     NOT_STARTED: "Not started",
     STARTED: "Started",
     FINISHED: "Finished"
 });
 
-const TaskPrio = Object.freeze({
+export const TaskPrio = Object.freeze({
     "0": "N/A",
     1: "1",
     2: "2",
@@ -19,8 +19,7 @@ const taskSchema = mongoose.Schema({
     // campo _id: es generado por mongoDB
     number: { 
         type: Number, 
-        required: true, 
-        unique: true 
+        required: true,
     },
     title: {
         type: String,

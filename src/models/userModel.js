@@ -2,6 +2,17 @@ import mongoose from "mongoose";
 import MultiLanguage, {msg} from "../utils/multiLanguage.js";
 import bcrypt from "bcrypt";
 
+const PASSWORD_MIN_LENGTH = 8;
+const PASSWORD_MAX_LENGTH = 30;
+const PASSWORD_REGEX = new RegExp(
+	"^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{"
+	+ `${PASSWORD_MIN_LENGTH},${PASSWORD_MAX_LENGTH}}$`);
+
+function messagePasswordRequirements() {
+	return lang.tr(msg.PASSWORD_REQUIREMENTS_NOT_MET,
+		PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH);
+};
+
 const Roles = Object.freeze({
     USER: "User",
     ADMIN: "Administrator",
@@ -16,7 +27,6 @@ const userSchema = mongoose.Schema({
     name: {
         type: String,
         required: [true, lang.tr(msg.FIELD_REQUIRED, lang.tr(msg.USERNAME_FIELD))],
-        unique: true,
         trim: true,
         maxlength: [
             100, lang.tr(msg.FIELD_MAX_LENGTH, lang.tr(msg.USERNAME_FIELD), 
@@ -25,19 +35,10 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: [true,  lang.tr(msg.FIELD_REQUIRED, lang.tr(msg.PASSWORD_FIELD))],
-        maxlength: [
-            30, lang.tr(msg.FIELD_MAX_LENGTH, lang.tr(msg.PASSWORD_FIELD), 
-            30)],
 		validate: {
-			validator: function (v) {
-				const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-				return regex.test(v);
-			},
-			message: lang.tr(msg.INVALID_PASSWORD),
+			validator: v => PASSWORD_REGEX.test(v),
+			message: messagePasswordRequirements(),
 		},
-		set: function (v) {
-			return bcrypt.hashSync(v, 10);
-		}
     },
     email: {
         type: String,
@@ -58,18 +59,20 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         default: "USER",
-        enum: Object.keys(Roles),
-        validate: {
-            validator: function (v) {
-                return Object.keys(Roles).includes(v);
-            },
-            message: lang.tr(msg.INVALID_ROLE)
-        }
+		enum: {
+			values: Object.keys(Roles),
+			message: lang.tr(msg.INVALID_ROLE)
+		},
     },
     createdAt: {
         type: Date,
         default: Date.now
     }
+})
+
+userSchema.pre("save", function (next) {
+	this.password = bcrypt.hashSync(this.password, 10);
+	next();
 })
 
 export default mongoose.model("User", userSchema, "users");

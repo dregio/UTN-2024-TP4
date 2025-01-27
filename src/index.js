@@ -1,15 +1,3 @@
-/*
-	PENDIENTE:
-
-  5. Ver los TODOS.
-  4. agregar el readme.
-    - Presentar el proyecto en readme. Necesario en el readme: título del proyecto, descripción, listado de tecnologías y como correr el proyecto. Además incluir instrucciones claras sobre cómo ejecutar, cuales son los endpoints y comandos para probar la aplicación.
-    - Ejemplos de datos mock para POST en el readme.
-  6. terminar de traducir lo que falta.
-  7. publicar en github.
-
-*/
-
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
@@ -17,13 +5,15 @@ import { connectDB } from "./db.js";
 import userRoute from "./routes/userRoute.js";
 import taskRoute from "./routes/taskRoute.js";
 import projectRoute from "./routes/projectRoute.js";
-import { API_V1_, PORT, SESSION_SECRET } from "./config.js";
+import { API_V1_, debugging, PORT, SESSION_SECRET, setDebugging } from "./config.js";
 import MultiLanguage, { msg } from "./utils/multiLanguage.js";
 import session from "express-session";
 
-const lang = new MultiLanguage();
+setDebugging(true); 
+debugging && console.log("*** DEBUGGING IS ON *** --> comment the line setDebugging(true) in index.js to turn off");
+const lang = new MultiLanguage(); 
 
-console.log(lang.tr(msg.CONNECTING_TO_DB));
+debugging && console.log(lang.tr(msg.CONNECTING_TO_DB));
 connectDB();
 
 const app = express();
@@ -34,9 +24,9 @@ app.use(
 		methods: "GET,POST,PUT,DELETE" })
 );
 
-app.use(bodyParser.json()); // TODO3 - ver si es necesario bodyParser.
+app.use(bodyParser.json()); 
 
-app.use(bodyParser.urlencoded({ extended: true })); // TODO3 - ver si es necesario URLENCODED.
+app.use(bodyParser.urlencoded({ extended: true }));
 
 /* app.use("/", (req, res) => {
 	res.send("RegioTasks API");

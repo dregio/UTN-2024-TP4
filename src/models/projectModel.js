@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-// TODO3: Falta internacionalizar.
+// TODO3: Falta internacionalizar los mensajes.
 
 const projectSchema = mongoose.Schema({
     // campo _id: es generado por mongoDB
